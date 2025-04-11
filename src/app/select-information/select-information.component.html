@@ -1,0 +1,46 @@
+<!-- <form>
+    <fieldset>
+        <input type="text" id="adviser-name" placeholder="Nombre del Asesor">
+        <input type="text" id="client-name" placeholder="Nombre del Deudor">
+        <input type="number" id="client-DNI" placeholder="Dni del Deudor">
+        <select name="products" id="products">  
+            <option value="Master">Master</option>
+            <option value="Visa">Visa</option>
+            <option value="American Express">American Express</option>
+            <option value="Prestamo">Prestamo</option>
+        </select>
+        <input type="number" id="amount" placeholder="Monto de deuda">
+        <button (click)="addProduct()">+</button>
+    </fieldset>
+</form>
+
+<ng-template>
+    <select name="products" id="products">
+        <option value="Master">Master</option>
+        <option value="Visa">Visa</option>
+        <option value="American Express">American Express</option>
+        <option value="Prestamo">Prestamo</option>
+    </select>
+</ng-template> -->
+<form [formGroup]="deudaForm" (ngSubmit)="finalizar()">
+    <input type="text" formControlName="adviserName" placeholder="Nombre del Asesor">
+    <input type="text" formControlName="clientName" placeholder="Nombre del Deudor">
+    <input type="number" formControlName="clientDNI" placeholder="DNI del Deudor">
+  
+    <div formArrayName="products">
+      <div *ngFor="let group of products.controls; let i = index" [formGroupName]="deudaForm">
+        <select formControlName="name">
+          <option value="Master">Master</option>
+          <option value="Visa">Visa</option>
+          <option value="American Express">American Express</option>
+          <option value="Prestamo">Prestamo</option>
+        </select>
+        <input type="number" formControlName="amount" placeholder="Monto de deuda">
+      </div>
+    </div>
+  
+    <button type="button" (click)="addProduct()">Agregar producto</button>
+    <button type="submit">Terminar</button>
+  </form>
+  
+  <p *ngIf="summaryText">{{ summaryText }}</p>
